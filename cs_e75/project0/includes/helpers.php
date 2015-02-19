@@ -31,5 +31,25 @@ function render($template, $data = array()) {
     }
 }
 
+
+function setupPage($page) {
+	if (!isset($page))
+		$page = 'index';
+
+	// determine which page to enter
+	switch ($page)
+	{
+		case 'index':
+			render('templates/header',array('title' => 'Welcome to Restuarant'));
+			render('index');
+			render('templates/footer');
+			break;
+		case 'menu'
+			render('templates/header',array('title' => 'PizzaMenu'));
+			render('menu');
+			render('templates/footer');
+			break;
+	}
+}
 ?>
 

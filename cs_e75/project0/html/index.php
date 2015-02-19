@@ -1,18 +1,21 @@
-<?php
-
-require_once('../includes/helpers.php');
-
-?>
+<!DOCTYPE html>
 <html>
+<head>
+	<title>My Menu</title>
+</head>
 <body>
-	<head>
-		<meta name="viewport" content="width=device-width">
-		<title><?php echo htmlspecialchars($title) ?></title>
-	</head>
-	<h1><?php echo htmlspecialchars($title) ?></h1>
-	
-	<footer>
-	</footer>
+	<h1>Pizza Shop Menu</h1>
+	<ul>
+		<?php
+			$dom = simplexml_load_file("../includes/menu.xml");
+			foreach ($dom->xpath('/restaurants/restaurant_menu/sections/section') as $elem)
+			{
+				echo "<li>";
+				echo $elem->category;
+				echo "</li>";
+			}
+		?>
+	</ul>
+
 </body>
 </html>
-
