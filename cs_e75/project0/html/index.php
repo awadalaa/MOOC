@@ -12,6 +12,17 @@
 			{
 				echo "<li>";
 				echo $elem->category;
+					echo "<ol>";
+					foreach ($elem->items->element as $item){
+						echo "<li>";
+						echo $item->name;
+						echo ".......................";
+						echo $item->price->element['0']->sm;
+						echo "&nbsp";
+						echo $item->price->element['1']->lg;
+						echo "</li>";
+					}
+					echo "</ol>";
 				echo "</li>";
 			}
 		?>
