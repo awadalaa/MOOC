@@ -1,12 +1,13 @@
 import oauth2 as oauth
 import urllib2 as urllib
+import sys
 
 # See assignment1.html instructions or README for how to get these credentials
 
-api_key = "TYjytXHf4Krr1ZUEVSbD5MdjY"
-api_secret = "jhMSzSfH67Zj2tzOrv8gxOnQ2FwkXaEbg7l9jGZujpqvpQi3ld"
-access_token_key = "141382493-4s0BUqEFXT36epGCEIti4xNmlAHxaLqJl2dC97vk"
-access_token_secret = "eIFTM8NCOcyfd1tmF98Zdf683S78NGgfctoBNqP0nH0kB"
+api_key = "key"
+api_secret = "secret"
+access_token_key = "token"
+access_token_secret = "secret"
 
 _debug = 0
 
@@ -58,4 +59,4 @@ def fetchsamples():
     print line.strip()
 
 if __name__ == '__main__':
-  fetchsamples()
+  fetchsamples(
