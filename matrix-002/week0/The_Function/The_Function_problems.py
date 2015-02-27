@@ -20,7 +20,7 @@ def tuple_sum(A, B):
     >>> tuple_sum([(1,2), (10,20)],[(3,4), (30,40)])
     [(4, 6), (40, 60)]
     '''
-    pass
+    return [ (A[i][0]+B[i][0],A[i][1]+B[i][1]) for i in range(len(A))] 
 
 
 
@@ -35,7 +35,7 @@ def inv_dict(d):
     Example:
     >>> inv_dict({'goodbye':  'au revoir', 'thank you': 'merci'}) == {'merci':'thank you', 'au revoir':'goodbye'}
     '''
-    pass
+    return {v:k for k, v in d.items()}
 
 
 
