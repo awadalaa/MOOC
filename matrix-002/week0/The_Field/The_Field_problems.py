@@ -20,7 +20,7 @@ def myFilter(L, num):
       >>> myFilter([10,15,20,25],10)
       [15, 25]
     '''
-    pass
+    return list(filter(lambda x:x%num!=0,L))
 
 
 

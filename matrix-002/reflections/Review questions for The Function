@@ -1,0 +1,21 @@
+Review questions for The Function
+
+What does the notation f:A⟶B mean?
+	it means there is a function f with inputs mapping fromt domain set A to the codomain set B
+
+What are the criteria for f to be an invertible function?
+	for every input to a function f(x)->y its inverse f(y) should equal x
+
+What is associativity of functional composition?
+	(h∘g)∘f=h∘(g∘f)
+
+What are the criteria for a function to be a probability function?
+	A probability function is a function which assigns probabilities to the values of a random variable.
+		All the probabilities must be between 0 and 1
+		The sum of the probabilities must equal 1
+
+What is the Fundamental Principle of Probability Theory?
+	If two choices are to be made, with A ways to make the first choice and B ways to make the second choice, then there are A x B ways to make the two choices.
+
+
+If the input to an invertible function is chosen randomly according to the uniform distribution, what is the distribution of the output?

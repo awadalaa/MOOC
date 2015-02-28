@@ -1,0 +1,9 @@
+Review questions for The Function
+
+What does the notation f:A⟶B mean?
+	it means there is a function f mapping the domain A to the codomain B
+What are the criteria for f to be an invertible function?
+What is associativity of functional composition?
+What are the criteria for a function to be a probability function?
+What is the Fundamental Principle of Probability Theory?
+If the input to an invertible function is chosen randomly according to the uniform distribution, what is the distribution of the output?
