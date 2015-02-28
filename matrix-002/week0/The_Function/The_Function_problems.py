@@ -51,11 +51,11 @@ def row(p, n):
     >>> row(10,4)
     [10, 11, 12, 13]
     '''
-    pass
+    return [i+p for i in range(n)]
 
-comprehension_with_row = ...
+comprehension_with_row = [row(j,20) for j in range(15)]
 
-comprehension_without_row = ...
+comprehension_without_row = [[i+j for i in range(20)] for j in range(15)]
 
 
 
