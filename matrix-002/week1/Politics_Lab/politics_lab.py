@@ -131,9 +131,11 @@ def least_similar(sen, voting_dict):
 
 
 ## 5: (Task 2.12.5) Chafee, Santorum
-most_like_chafee    = ''
-least_like_santorum = '' 
-
+#f=open('voting_record_dump109.txt')
+#most_like_chafee    = most_similar('Chafee',create_voting_dict(f))
+#least_like_santorum = least_similar('Santorum',create_voting_dict(f))
+most_like_chafee = 'Jeffords'
+least_like_santorum = 'Feingold'
 
 
 ## 6: (Task 2.12.7) Most Average Democrat
@@ -151,9 +153,28 @@ def find_average_similarity(sen, sen_set, voting_dict):
         >>> vd == {'Klein':[1,1,1], 'Fox-Epstein':[1,-1,0], 'Ravella':[-1,0,0], 'Oyakawa':[-1,-1,-1], 'Loery':[0,1,1]}
         True
     """
-    return ...
+    _list=[]
+    for k in sen_set:
+        _list.append(policy_compare(sen,k,voting_dict))
+    return sum(_list)/len(sen_set)
 
-most_average_Democrat = ... # give the last name (or code that computes the last name)
+
+# _list=[]
+# f=open('voting_record_dump109.txt')
+# stringlist = f.readlines()
+# voting_dict = create_voting_dict(stringlist)
+# f=open('voting_record_dump109.txt')
+# democrats = {line.split()[0] for line in stringlist if line.split()[1]=='D'}
+# for s in democrats:
+#     print(s)
+#     sen_set = democrats.difference(s)# exlude the current senator in the loop
+#     print(find_average_similarity(s,sen_set,voting_dict))
+#     _list.append(find_average_similarity(s,sen_set,voting_dict))
+
+# print(max(_list))
+# f.close()
+
+most_average_Democrat = 34.86046511627907
 
 
 
