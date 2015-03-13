@@ -17,9 +17,7 @@ def vec_select(veclist, k):
     >>> vec_select([v1, v2, v3, v4], 'a') == [Vec(D,{'b': 1}), Vec(D,{'b': 2})]
     True
     '''
-    return [v for v in veclist if vec.getitem(v,k)==0]
-
-    
+    return [v for v in veclist if v[k]==0]
 
 def vec_sum(veclist, D):
     '''
@@ -33,12 +31,12 @@ def vec_sum(veclist, D):
     '''
     retMap = {}
     for v in veclist:
-	    for key,val in v.f.items():
-			if key in retMap.keys()
-				retMap[key] += val
-			else:
-				retMap[key] = val
-	return Vec(D,retMap)
+        for key,val in v.f.items():
+            if key in retMap.keys():
+                retMap[key] += val
+            else:
+                retMap[key] = val
+    return Vec(D,retMap)
 
 def vec_select_sum(veclist, k, D):
     '''
