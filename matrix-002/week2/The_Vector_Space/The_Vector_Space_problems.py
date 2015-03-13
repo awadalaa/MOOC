@@ -29,14 +29,11 @@ def vec_sum(veclist, D):
     >>> vec_sum([v1, v2, v3, v4], D) == Vec(D, {'b': 13, 'a': 11})
     True
     '''
-    retMap = {}
-    for v in veclist:
-        for key,val in v.f.items():
-            if key in retMap.keys():
-                retMap[key] += val
-            else:
-                retMap[key] = val
-    return Vec(D,retMap)
+    vec = Vec(D, {})
+    for d in D:
+        d_sum = sum([vec[d] for vec in veclist])
+        vec[d] = d_sum
+    return vec
 
 def vec_select_sum(veclist, k, D):
     '''
@@ -48,7 +45,7 @@ def vec_select_sum(veclist, k, D):
     >>> vec_select_sum([v1, v2, v3, v4], 'a', D) == Vec(D, {'b': 3})
     True
     '''
-    pass
+    return vec_sum(vec_select(veclist, k), D)
 
 
 
@@ -63,7 +60,7 @@ def scale_vecs(vecdict):
     >>> [v in [Vec({1,2,4},{2: 3.0}), Vec({1,2,4},{1: 0.2, 2: 0.4, 4: 1.6})] for v in result]
     [True, True]
     '''
-    pass
+    return [ vec / k for k, vec in vecdict.items()]
 
 
 
@@ -84,30 +81,41 @@ def GF2_span(D, S):
     >>> S == {Vec({0, 1},{1: one}), Vec({0, 1},{0: one})}
     True
     '''
-    pass
+    empty_set = set()
+    subsets = [ empty_set ]
+    for s in S:
+        for subset in subsets.copy():
+            copy = subset.copy()
+            copy.add(s)
+            subsets.append(copy)
+
+    result = set()
+    for subset in subsets:
+        result.add(vec_sum(subset, D))
+
+    return result
 
 
 
 ## 4: (Problem 3.8.7) Is it a vector space 1
 # Answer with a boolean, please.
-is_a_vector_space_1 = ...
+is_a_vector_space_1 = False
 
 
 
 ## 5: (Problem 3.8.8) Is it a vector space 2
 # Answer with a boolean, please.
-is_a_vector_space_2 = ...
+is_a_vector_space_2 = True
 
 
 
 ## 6: (Problem 3.8.9) Is it a vector space 3
 # Answer with a boolean, please.
-is_a_vector_space_3 = ...
+is_a_vector_space_3 = False
 
 
 
 ## 7: (Problem 3.8.10) Is it a vector space 4
 # Answer with a boolean, please.
-is_a_vector_space_4a = ...
-is_a_vector_space_4b = ...
-
+is_a_vector_space_4a = True
+is_a_vector_space_4b = False
