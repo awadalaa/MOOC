@@ -4,6 +4,7 @@ coursera = 1
 
 from mat import Mat
 from vec import Vec
+import matutil
 
 
 
@@ -117,15 +118,15 @@ your_answer_f_BA = [[-4,-2,-1,1],[2,10,-4,6],[8,8,8,0],[-3,18,6,-15]]
 
 
 ## 9: (Problem 9) Column-vector and row-vector matrix multiplication
-column_row_vector_multiplication1 = Vec({0, 1}, {...})
+column_row_vector_multiplication1 = Vec({0, 1}, {0:13,1:20})
 
-column_row_vector_multiplication2 = Vec({0, 1, 2}, {...})
+column_row_vector_multiplication2 = Vec({0, 1, 2}, {0:24,1:11,2:4})
 
-column_row_vector_multiplication3 = Vec({0, 1, 2, 3}, {...})
+column_row_vector_multiplication3 = Vec({0, 1, 2, 3}, {0:4,1:8,2:11,3:3})
 
-column_row_vector_multiplication4 = Vec({0,1}, {...})
+column_row_vector_multiplication4 = Vec({0,1}, {0:30,1:16})
 
-column_row_vector_multiplication5 = Vec({0, 1, 2}, {...})
+column_row_vector_multiplication5 = Vec({0, 1, 2}, {0:-3,1:1,2:9})
 
 
 
@@ -151,7 +152,14 @@ def lin_comb_mat_vec_mult(M, v):
     True
     '''
     assert(M.D[1] == v.D)
-    pass
+    new_v = Vec(M.D[0], {})
+
+    col_dict = matutil.mat2coldict(M)
+
+    for key, val in col_dict.items():
+        new_v += v[key] * val
+
+    return new_v
 
 
 
@@ -176,7 +184,15 @@ def lin_comb_vec_mat_mult(v, M):
       True
     '''
     assert(v.D == M.D[0])
-    pass
+    
+    new_v = Vec(M.D[1], {})
+
+    row_dict = matutil.mat2rowdict(M)
+
+    for key, val in row_dict.items():
+        new_v += v[key] * val
+
+    return new_v
 
 
 
@@ -199,7 +215,15 @@ def dot_product_mat_vec_mult(M, v):
     True
     '''
     assert(M.D[1] == v.D)
-    pass
+    
+    new_v = Vec(M.D[0], {})
+
+    row_dict = matutil.mat2rowdict(M)
+
+    for key, val in row_dict.items():
+        new_v.f[key] = val * v
+
+    return new_v
 
 
 
@@ -221,7 +245,16 @@ def dot_product_vec_mat_mult(v, M):
       True
       '''
     assert(v.D == M.D[0])
-    pass
+    assert(v.D == M.D[0])
+
+    new_v = Vec(M.D[1], {})
+
+    col_dict = matutil.mat2coldict(M)
+
+    for key, val in col_dict.items():
+        new_v.f[key] = v * val
+
+    return new_v
 
 
 
@@ -229,14 +262,26 @@ def dot_product_vec_mat_mult(v, M):
 # You are also allowed to use the matutil module
 def Mv_mat_mat_mult(A, B):
     assert A.D[1] == B.D[0]
-    pass
+    col_dict = matutil.mat2coldict(B)
+
+    foo_dict = {}
+    for key, val in col_dict.items():
+        foo_dict[key] = A * val
+
+    return matutil.coldict2mat(foo_dict)
 
 
 
 ## 15: (Problem 15) Vector-matrix matrix-matrix multiply
 def vM_mat_mat_mult(A, B):
     assert A.D[1] == B.D[0]
-    pass
+    row_dict = matutil.mat2rowdict(A)
+
+    foo_dict = {}
+    for key, val in row_dict.items():
+        foo_dict[key] = val * B
+
+    return matutil.rowdict2mat(foo_dict)
 
 
 
@@ -278,28 +323,28 @@ x2 = ...
 r2 = ...
 
 #Is it really a solution? Assign True if yes, False if no.
-is_good2 = ...
+is_good2 = True
 
 
 
 
 ## 17: (Problem 17) Solving 2x2 linear systems and finding matrix inverse
-solving_systems_x1 = ...
-solving_systems_x2 = ...
-solving_systems_y1 = ...
-solving_systems_y2 = ...
-solving_systems_m = Mat(({0, 1}, {0, 1}), {...})
-solving_systems_a = Mat(({0, 1}, {0, 1}), {...})
-solving_systems_a_times_m = Mat(({0, 1}, {0, 1}), {...})
-solving_systems_m_times_a = Mat(({0, 1}, {0, 1}), {...})
+solving_systems_x1 = -1/5
+solving_systems_x2 = 2/5
+solving_systems_y1 = 4/5
+solving_systems_y2 = -3/5
+solving_systems_m = Mat(({0, 1}, {0, 1}), {(0, 0): -1/5, (1, 0): 2/5, (0, 1):4/5, (1, 1):-3/5})
+solving_systems_a = Mat(({0, 1}, {0, 1}), {(0, 0): 3, (1, 0): 2, (0, 1):4, (1, 1):1})
+solving_systems_a_times_m = Mat(({0, 1}, {0, 1}), {(0, 1): 0, (1, 0): 0.0, (0, 0): 1.0, (1, 1): 1.0})
+solving_systems_m_times_a = Mat(({0, 1}, {0, 1}), {(0, 1): 0, (1, 0): 0, (0, 0): 1.0, (1, 1): 1.0})
 
 
 
 ## 18: (Problem 18) Matrix inverse criterion
 # Please write your solutions as booleans (True or False)
 
-are_inverses1 = ...
-are_inverses2 = ...
-are_inverses3 = ...
-are_inverses4 = ...
+are_inverses1 = True
+are_inverses2 = True
+are_inverses3 = False
+are_inverses4 = False
 
