@@ -1,7 +1,37 @@
+# version code 542eddf1f327+
+coursera = 1
+# Please fill out this stencil and submit using the provided submission script.
+
 # Copyright 2013 Philip N. Klein
 from vec import Vec
-
 #Test your Mat class over R and also over GF(2).  The following tests use only R.
+
+def equal(A, B):
+    """
+    Returns true iff A is equal to B.
+
+    >>> Mat(({'a','b'}, {0,1}), {('a',1):0}) == Mat(({'a','b'}, {0,1}), {('b',1):0})
+    True
+    >>> A = Mat(({'a','b'}, {0,1}), {('a',1):2, ('b',0):1})
+    >>> B = Mat(({'a','b'}, {0,1}), {('a',1):2, ('b',0):1, ('b',1):0})
+    >>> C = Mat(({'a','b'}, {0,1}), {('a',1):2, ('b',0):1, ('b',1):5})
+    >>> A == B
+    True
+    >>> A == C
+    False
+    >>> A == Mat(({'a','b'}, {0,1}), {('a',1):2, ('b',0):1})
+    True
+    """
+    assert A.D == B.D
+    for ro in A.D[0]:
+        for co in A.D[1]:
+            if (ro,co) not in A.f.keys():
+                A.f[(ro, co)] = 0
+    for row in B.D[0]:
+        for col in B.D[1]:
+            if (row, col) not in B.f.keys():
+                B.f[(row, col)] = 0
+    return A.f == B.f
 
 def getitem(M, k):
     """
@@ -13,7 +43,10 @@ def getitem(M, k):
     0
     """
     assert k[0] in M.D[0] and k[1] in M.D[1]
-    pass
+    if (k[0], k[1]) in M.f.keys():
+        return M.f[(k[0], k[1])]
+    else:
+        return 0
 
 def setitem(M, k, val):
     """
@@ -33,7 +66,7 @@ def setitem(M, k, val):
     True
     """
     assert k[0] in M.D[0] and k[1] in M.D[1]
-    pass
+    M.f[(k[0], k[1])] = val
 
 def add(A, B):
     """
@@ -57,7 +90,18 @@ def add(A, B):
     True
     """
     assert A.D == B.D
-    pass
+    added_matrix = Mat(A.D, {})
+
+    for key, val in A.f.items():
+        added_matrix.f[key] = val
+
+    for key, val in B.f.items():
+        if key in added_matrix.f.keys():
+            added_matrix.f[key] += val
+        else:
+            added_matrix.f[key] = val
+
+    return added_matrix
 
 def scalar_mul(M, x):
     """
@@ -71,26 +115,7 @@ def scalar_mul(M, x):
     >>> 0.25*M == Mat(({1,3,5}, {2,4}), {(1,2):1.0, (5,4):0.5, (3,4):0.75})
     True
     """
-    pass
-
-def equal(A, B):
-    """
-    Returns true iff A is equal to B.
-
-    >>> Mat(({'a','b'}, {0,1}), {('a',1):0}) == Mat(({'a','b'}, {0,1}), {('b',1):0})
-    True
-    >>> A = Mat(({'a','b'}, {0,1}), {('a',1):2, ('b',0):1})
-    >>> B = Mat(({'a','b'}, {0,1}), {('a',1):2, ('b',0):1, ('b',1):0})
-    >>> C = Mat(({'a','b'}, {0,1}), {('a',1):2, ('b',0):1, ('b',1):5})
-    >>> A == B
-    True
-    >>> A == C
-    False
-    >>> A == Mat(({'a','b'}, {0,1}), {('a',1):2, ('b',0):1})
-    True
-    """
-    assert A.D == B.D
-    pass
+    return Mat(M.D, {key: (val * x) for key, val in M.f.items()})
 
 def transpose(M):
     """
@@ -104,7 +129,8 @@ def transpose(M):
     >>> M.transpose() == Mt
     True
     """
-    pass
+    transposedf = {(j,i):v for (i,j),v in M.f.items()}
+    return Mat((M.D[1], M.D[0]), transposedf)
 
 def vector_matrix_mul(v, M):
     """
@@ -124,7 +150,15 @@ def vector_matrix_mul(v, M):
     True
     """
     assert M.D[0] == v.D
-    pass
+    ret_v = Vec(M.D[1], {})
+
+    for d in ret_v.D:
+        ret_v.f[d] = 0
+
+    for (k1, k2), val in M.f.items():
+        ret_v.f[k2] += val * v[k1]
+
+    return ret_v
 
 def matrix_vector_mul(M, v):
     """
@@ -143,7 +177,15 @@ def matrix_vector_mul(M, v):
     True
     """
     assert M.D[1] == v.D
-    pass
+    ret_v = Vec(M.D[0], {})
+
+    for d in ret_v.D:
+        ret_v.f[d] = 0
+
+    for (k1, k2), val in M.f.items():
+        ret_v.f[k1] += val * v[k2]
+
+    return ret_v
 
 def matrix_matrix_mul(A, B):
     """
@@ -169,7 +211,18 @@ def matrix_matrix_mul(A, B):
     True
     """
     assert A.D[1] == B.D[0]
-    pass
+    
+    from matutil import mat2coldict, mat2rowdict
+    ret_mat = Mat((A.D[0], B.D[1]), {})
+
+    a_row = mat2rowdict(A)
+    b_col = mat2coldict(B)
+
+    for key, val in a_row.items():
+        for key2, val2 in b_col.items():
+            ret_mat.f[(key, key2)] = val * val2
+
+    return ret_mat
 
 ################################################################################
 
